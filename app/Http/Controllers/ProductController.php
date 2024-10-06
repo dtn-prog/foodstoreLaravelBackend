@@ -8,106 +8,73 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the products.
-     *
-     * @return \Illuminate\View\View
-     */
+    // Display a listing of the products
     public function index()
     {
         $products = Product::all();
         return view('products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new product.
-     *
-     * @return \Illuminate\View\View
-     */
+    // Show the form for creating a new product
     public function create()
     {
         return view('products.create');
     }
 
-    /**
-     * Store a newly created product in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    // Store a newly created product in storage
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|integer',
-            'in_stock' => 'required|boolean',
+            'price' => 'required|integer|min:0',
+            'quantity' => 'required|integer|min:0',
         ]);
 
-        // Store the image
+        // Store the image and get the path
         $imagePath = $request->file('image')->store('images', 'public');
 
+        // Create the product
         Product::create([
             'name' => $request->name,
             'image' => $imagePath,
             'price' => $request->price,
-            'in_stock' => $request->in_stock,
+            'quantity' => $request->quantity,
         ]);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
-    /**
-     * Display the specified product.
-     *
-     * @param Product $product
-     * @return \Illuminate\View\View
-     */
+    // Display the specified product
     public function show(Product $product)
     {
         return view('products.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified product.
-     *
-     * @param Product $product
-     * @return \Illuminate\View\View
-     */
+    // Show the form for editing the specified product
     public function edit(Product $product)
     {
         return view('products.edit', compact('product'));
     }
 
-    /**
-     * Update the specified product in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param Product $product
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    // Update the specified product in storage
     public function update(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|integer',
-            'in_stock' => 'required|boolean',
+            'price' => 'required|integer|min:0',
+            'quantity' => 'required|integer|min:0',
         ]);
 
-        $data = [
-            'name' => $request->name,
-            'price' => $request->price,
-            'in_stock' => $request->in_stock,
-        ];
+        // Update the product details
+        $data = $request->only(['name', 'price', 'quantity']);
 
-        // If an image is uploaded, store it and update the path
+        // Check if an image is being uploaded
         if ($request->hasFile('image')) {
-            // Delete the old image if necessary
-            Storage::disk('public')->delete($product->image);
-
-            // Store new image
-            $data['image'] = $request->file('image')->store('images', 'public');
+            // Store the new image and get the path
+            $imagePath = $request->file('image')->store('images', 'public');
+            $data['image'] = $imagePath;
         }
 
         $product->update($data);
@@ -115,19 +82,15 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
-    /**
-     * Remove the specified product from storage.
-     *
-     * @param Product $product
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    // Remove the specified product from storage
     public function destroy(Product $product)
     {
-        // Delete the image from storage
-        Storage::disk('public')->delete($product->image);
+        // Delete the image from storage if it exists
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
 
         $product->delete();
-
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 }

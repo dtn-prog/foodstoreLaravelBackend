@@ -4,6 +4,7 @@
 <div class="container mx-auto mt-8 px-4">
     <h2 class="text-3xl font-semibold mb-6">Products</h2>
     <a href="{{ route('products.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Product</a>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
         @foreach ($products as $product)
             <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 transform hover:scale-105">
@@ -11,7 +12,7 @@
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-gray-800">{{ $product->name }}</h3>
                     <p class="text-gray-800 font-semibold mt-2">${{ $product->price }}</p>
-                    <p class="text-gray-600 mt-2">{{ $product->in_stock ? 'In Stock' : 'Out of Stock' }}</p>
+                    <p class="text-gray-600 mt-2">{{ $product->quantity > 0 ? 'In Stock' : 'Out of Stock' }}</p>
                     <div class="mt-4 flex justify-between">
                         <a href="{{ route('products.edit', $product) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
                         <button onclick="document.getElementById('delete-box-{{ $product->id }}').showModal()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>

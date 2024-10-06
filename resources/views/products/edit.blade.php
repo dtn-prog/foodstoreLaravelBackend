@@ -29,16 +29,13 @@
             @error('image')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
             @enderror
-            <img id="image-preview" src="{{ asset('storage/' . $product->image) }}" class="mt-2 w-full h-48 object-cover rounded" />
+            <img id="image-preview" src="{{ asset('storage/' . $product->image) }}" alt="Current Image" class="mt-2 w-full h-48 object-cover rounded @if(!$product->image) hidden @endif" />
         </div>
 
         <div class="mb-4">
-            <label for="in_stock" class="block text-gray-700">In Stock</label>
-            <select name="in_stock" id="in_stock" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('in_stock') border-red-500 @enderror" required>
-                <option value="1" {{ $product->in_stock ? 'selected' : '' }}>Yes</option>
-                <option value="0" {{ !$product->in_stock ? 'selected' : '' }}>No</option>
-            </select>
-            @error('in_stock')
+            <label for="quantity" class="block text-gray-700">Quantity</label>
+            <input type="number" name="quantity" id="quantity" value="{{ old('quantity', $product->quantity) }}" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('quantity') border-red-500 @enderror" required>
+            @error('quantity')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
             @enderror
         </div>
@@ -56,8 +53,11 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden');
             };
             reader.readAsDataURL(file);
+        } else {
+            imagePreview.classList.add('hidden');
         }
     }
 </script>

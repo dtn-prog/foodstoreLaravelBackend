@@ -32,12 +32,9 @@
         </div>
 
         <div class="mb-4">
-            <label for="in_stock" class="block text-gray-700">In Stock</label>
-            <select name="in_stock" id="in_stock" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('in_stock') border-red-500 @enderror" required>
-                <option value="1" {{ old('in_stock') ? 'selected' : '' }}>Yes</option>
-                <option value="0" {{ old('in_stock') === '0' ? 'selected' : '' }}>No</option>
-            </select>
-            @error('in_stock')
+            <label for="quantity" class="block text-gray-700">Quantity</label>
+            <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('quantity') border-red-500 @enderror" required>
+            @error('quantity')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
             @enderror
         </div>
