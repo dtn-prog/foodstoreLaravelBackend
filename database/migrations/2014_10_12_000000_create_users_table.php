@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->unique();
-            $table->enum('role', ['admin','customer', 'shipper']);
+            $table->enum('role', ['admin','customer']);
             // $table->double('lat')->nullable();
             // $table->double('long')->nullable();
             $table->timestamp('email_verified_at')->nullable();
