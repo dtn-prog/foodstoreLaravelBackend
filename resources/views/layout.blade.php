@@ -13,6 +13,8 @@
     </header>
     <nav class="bg-gray-800 text-white py-2">
         <div class="container mx-auto flex justify-center">
+            <a href="{{ route('home') }}" class="mx-4 hover:underline">Home</a>
+            <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
             {{-- <a href="{{ route('categories.index') }}" class="mx-4 hover:underline">Categories</a>
             <a href="{{ route('features.index') }}" class="mx-4 hover:underline">Features</a>
             <a href="{{ route('restaurants.index') }}" class="mx-4 hover:underline">Restaurants</a>

@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('products.index');
@@ -26,3 +31,14 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
     Route::put('{product}', 'update')->name('products.update');
     Route::delete('{product}', 'destroy')->name('products.destroy');
 });
+
+Route::controller(UserController::class)->prefix('users')->group(function () {
+
+});
+
+Route::get('login', [LoginController::class, 'create'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('register', [RegisterController::class, 'create'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
