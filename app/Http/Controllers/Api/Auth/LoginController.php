@@ -7,5 +7,11 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    //
+    public function logout(Request $request) {
+        $request->user()->currentAccessToken()->delete();
+
+        $response = ['message'=>'loged out'];
+
+        return response()->json($response);
+    }
 }
