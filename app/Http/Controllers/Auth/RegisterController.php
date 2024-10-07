@@ -35,7 +35,7 @@ class RegisterController extends Controller
             'phone' => [
                 'required',
                 'string',
-                'unique:users',
+                'unique:users,phone',
                 'max:15',
                 'regex:/^\d{1,15}$/',
             ],
