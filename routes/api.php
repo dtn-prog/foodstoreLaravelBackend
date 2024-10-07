@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('register', [RegisterController::class, 'register'])->name('api.register');
+Route::post('login', [LoginController::class, 'login'])->name('api.login');
 
-Route::middleware('auth:sanctum')
-->post('logout', [LoginController::class, 'logout'])
-->name('api.logout');
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::post('logout', [LoginController::class, 'logout'])->name('api.logout');
+});
 
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('api.products.index');
