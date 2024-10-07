@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -36,7 +37,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|unique:users|max:15',
+            'role' => 'required|in:admin,customer,shipper',
+            'password' => 'required|string|confirmed',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -47,7 +62,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -58,7 +74,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -70,7 +87,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15|unique:users,phone,' . $user->id,
+            'role' => 'required|in:admin,customer,shipper',
+            'password' => 'nullable|string|confirmed',
+        ]);
+
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -81,6 +117,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

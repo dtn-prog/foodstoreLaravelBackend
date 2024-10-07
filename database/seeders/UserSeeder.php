@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
             'password' => bcrypt('admin'),
             'phone'=>'0989672531',
             'role'=>'admin',
-            'lat'=>'1',
-            'long'=>'1'
+            // 'lat'=>'1',
+            // 'long'=>'1'
         ]);
     }
 }
