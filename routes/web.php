@@ -33,7 +33,12 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 });
 
 Route::controller(UserController::class)->prefix('users')->group(function () {
-
+    route::get('', 'index')->name('users.index');
+    Route::get('create', 'create')->name('users.create');
+    Route::post('', 'store')->name('users.store');
+    Route::get('{user}/edit', 'edit')->name('users.edit');
+    Route::put('{user}', 'update')->name('users.update');
+    Route::delete('{user}', 'destroy')->name('users.destroy');
 });
 
 Route::get('login', [LoginController::class, 'create'])->name('login');

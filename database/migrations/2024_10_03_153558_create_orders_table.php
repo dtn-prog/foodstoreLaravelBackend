@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->enum('status',
             ['confirmed','shipped', 'delivered', 'paid', 'return']);
             $table->foreignId('shipper_id')->constrained('users','id');
+            $table->double('lat')->nullable();
+            $table->double('long')->nullable();
             $table->timestamps();
         });
     }
