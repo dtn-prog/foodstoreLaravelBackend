@@ -2,22 +2,10 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('home');
@@ -39,6 +27,15 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
     Route::get('{user}/edit', 'edit')->name('users.edit');
     Route::put('{user}', 'update')->name('users.update');
     Route::delete('{user}', 'destroy')->name('users.destroy');
+});
+
+Route::controller(OrderController::class)->prefix('orders')->group(function () {
+    route::get('', 'index')->name('orders.index');
+    Route::get('create', 'create')->name('orders.create');
+    Route::post('', 'store')->name('orders.store');
+    Route::get('{order}/edit', 'edit')->name('orders.edit');
+    Route::put('{order}', 'update')->name('orders.update');
+    Route::delete('{order}', 'destroy')->name('orders.destroy');
 });
 
 Route::get('login', [LoginController::class, 'create'])->name('login');
