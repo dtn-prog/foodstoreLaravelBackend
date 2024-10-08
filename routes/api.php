@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,10 @@ Route::post('login', [LoginController::class, 'login'])->name('api.login');
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::post('logout', [LoginController::class, 'logout'])->name('api.logout');
+
+    Route::post('oders/place', [OrderController::class, 'place'])->name("api.orders.place");
 });
+
 
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('api.products.index');

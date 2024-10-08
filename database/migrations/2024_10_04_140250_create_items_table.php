@@ -17,11 +17,11 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->integer('quantity');
             $table->foreignId('product_id')
-            ->constrained('products')
-            ->onDelete('cascade');
+                ->constrained('products')
+                ->onDelete('cascade');
             $table->foreignId('order_id')
-            ->constrained('orders')
-            ->onDelete('cascade');
+                ->constrained('orders')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

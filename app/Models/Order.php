@@ -12,11 +12,20 @@ class Order extends Model
     protected $guarded = [];
 
     public function user() {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function items() {
-        $this->hasMany(Item::class);
+        return $this->hasMany(Item::class);
+    }
+
+    public function totalPrice():int {
+        $items = $this->items;
+        $price = $items->sum(function ($item) {
+            return $item->price();
+        });
+
+        return $price;
     }
 
     use HasFactory;
