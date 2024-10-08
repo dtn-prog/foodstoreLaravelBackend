@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -25,5 +26,6 @@ Route::middleware('auth:sanctum')->group(function() {
 
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('api.products.index');
-
 });
+
+Route::get('location',[LocationController::class, 'get']);
