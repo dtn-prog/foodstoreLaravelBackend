@@ -50,7 +50,7 @@ class OrderController extends Controller
     public function history(Request $request) {
         $userId = auth('sanctum')->user()->id;
 
-        $orders = Order::where('user_id','=',$userId)->get();
+        $orders = Order::with('items.product')->where('user_id', $userId)->get();
 
         $ordersAndItems = $orders->map(function($order) {
             return [
@@ -60,7 +60,14 @@ class OrderController extends Controller
                 "created_at"=> $order->created_at,
                 "lat"=> $order->lat,
                 "long"=> $order->long,
-                "items"=> $order->items,
+                "items"=>$order->items->map(function($item) {
+                    return [
+                        "product_name"=>$item->product->name,
+                        "product_image"=>$item->product->image,
+                        "quantity"=>$item->quantity,
+                    ];
+                }),
+
             ];
         });
 
