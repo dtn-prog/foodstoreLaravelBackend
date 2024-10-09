@@ -7,8 +7,10 @@
     @foreach($orders as $order)
         <div class="bg-white shadow-md rounded-lg p-4 mb-6">
             <h2 class="text-xl font-semibold">Order #{{ $order->id }}</h2>
+            <h2 class="text-xl font-semibold">Order of user: {{ $order->user->name }}</h2>
             <p class="text-gray-600">Status: {{ ucfirst($order->status) }}</p>
             <p class="text-gray-600">Address: {{ $order->address }}</p>
+            <p class="text-gray-600">Duration: {{ $order->duration }}</p>
             <p class="text-gray-600">Lat: {{ $order->lat }}</p>
             <p class="text-gray-600">Long: {{ $order->long }}</p>
 

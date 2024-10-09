@@ -15,6 +15,7 @@ class OrderController extends Controller
             'lat' => 'required|numeric',
             'long' => 'required|numeric',
             'address'=>'nullable',
+            'duration'=>'nullable',
             'items' => 'required|array',
             'items.*.product_id' => 'required|integer|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
@@ -28,6 +29,7 @@ class OrderController extends Controller
             'address'=>$fields['address'],
             'lat'=>$fields['lat'],
             'long'=>$fields['long'],
+            'duration'=>$fields['duration']
         ]);
         $order->save();
 
