@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function index() {
-        $orders = Order::with('items.product')->get();
+        $orders = Order::all();
+
+        dd($orders[0]);
 
         return view('orders.index', compact('orders'));
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -45,5 +45,25 @@ class OrderController extends Controller
         }
 
         return response()->json(['totalPrice'=>$order->totalPrice()], $status=200);
+    }
+
+    public function history(Request $request) {
+        $userId = auth('sanctum')->user()->id;
+
+        $orders = Order::where('user_id','=',$userId)->get();
+
+        $ordersAndItems = $orders->map(function($order) {
+            return [
+                "status"=> $order->status,
+                "address"=> $order->address,
+                "duration"=> $order->duration,
+                "created_at"=> $order->created_at,
+                "lat"=> $order->lat,
+                "long"=> $order->long,
+                "items"=> $order->items,
+            ];
+        });
+
+        return response()->json($ordersAndItems);
     }
 }
