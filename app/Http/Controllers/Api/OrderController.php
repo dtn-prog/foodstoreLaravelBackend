@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -48,6 +49,7 @@ class OrderController extends Controller
     }
 
     public function history(Request $request) {
+        // DB::enableQueryLog();
         $userId = auth('sanctum')->user()->id;
 
         $orders = Order::with('items.product')->where('user_id', $userId)->get();
@@ -71,6 +73,7 @@ class OrderController extends Controller
             ];
         });
 
+        // $queries = DB::getQueryLog();
         return response()->json($ordersAndItems);
     }
 }
