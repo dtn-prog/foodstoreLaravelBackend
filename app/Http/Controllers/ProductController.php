@@ -23,27 +23,26 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
 
-    // Store a newly created product in storage
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'desc' => 'required|string', // Add validation for desc
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:0',
-            'cat_id' => 'required|exists:cats,id', // Validate category ID
+            'cat_id' => 'required|exists:cats,id',
         ]);
 
-        // Store the image and get the path
         $imagePath = $request->file('image')->store('images', 'public');
 
-        // Create the product
         Product::create([
             'name' => $request->name,
+            'desc' => $request->desc, // Include desc in creation
             'image' => $imagePath,
             'price' => $request->price,
             'quantity' => $request->quantity,
-            'cat_id' => $request->cat_id, // Assign category ID
+            'cat_id' => $request->cat_id,
         ]);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
@@ -56,23 +55,20 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'categories'));
     }
 
-    // Update the specified product in storage
     public function update(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'desc' => 'required|string', // Add validation for desc
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:0',
-            'cat_id' => 'required|exists:cats,id', // Validate category ID
+            'cat_id' => 'required|exists:cats,id',
         ]);
 
-        // Update the product details
-        $data = $request->only(['name', 'price', 'quantity', 'cat_id']); // Include category ID
+        $data = $request->only(['name', 'desc', 'price', 'quantity', 'cat_id']); // Include desc
 
-        // Check if an image is being uploaded
         if ($request->hasFile('image')) {
-            // Store the new image and get the path
             $imagePath = $request->file('image')->store('images', 'public');
             $data['image'] = $imagePath;
         }

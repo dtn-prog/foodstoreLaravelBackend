@@ -15,6 +15,14 @@
         </div>
 
         <div class="mb-4">
+            <label for="desc" class="block text-gray-700">Description</label>
+            <textarea name="desc" id="desc" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('desc') border-red-500 @enderror" required>{{ old('desc') }}</textarea>
+            @error('desc')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-4">
             <label for="cat_id" class="block text-gray-700">Category</label>
             <select name="cat_id" id="cat_id" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('cat_id') border-red-500 @enderror" required>
                 <option value="" disabled selected>Select a category</option>
