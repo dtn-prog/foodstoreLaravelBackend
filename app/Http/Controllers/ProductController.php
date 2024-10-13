@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cat; // Import the Cat model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,14 +12,15 @@ class ProductController extends Controller
     // Display a listing of the products
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get(); // Eager load category
         return view('products.index', compact('products'));
     }
 
     // Show the form for creating a new product
     public function create()
     {
-        return view('products.create');
+        $categories = Cat::all(); // Fetch all categories
+        return view('products.create', compact('categories'));
     }
 
     // Store a newly created product in storage
@@ -29,6 +31,7 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:0',
+            'cat_id' => 'required|exists:cats,id', // Validate category ID
         ]);
 
         // Store the image and get the path
@@ -40,21 +43,17 @@ class ProductController extends Controller
             'image' => $imagePath,
             'price' => $request->price,
             'quantity' => $request->quantity,
+            'cat_id' => $request->cat_id, // Assign category ID
         ]);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
-    // Display the specified product
-    public function show(Product $product)
-    {
-        return view('products.show', compact('product'));
-    }
-
     // Show the form for editing the specified product
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $categories = Cat::all(); // Fetch all categories
+        return view('products.edit', compact('product', 'categories'));
     }
 
     // Update the specified product in storage
@@ -65,10 +64,11 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:0',
+            'cat_id' => 'required|exists:cats,id', // Validate category ID
         ]);
 
         // Update the product details
-        $data = $request->only(['name', 'price', 'quantity']);
+        $data = $request->only(['name', 'price', 'quantity', 'cat_id']); // Include category ID
 
         // Check if an image is being uploaded
         if ($request->hasFile('image')) {

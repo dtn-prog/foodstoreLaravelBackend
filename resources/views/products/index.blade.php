@@ -12,6 +12,7 @@
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-gray-800">{{ $product->name }} | {{ $product->id }}</h3>
                     <p class="text-gray-800 font-semibold mt-2">${{ $product->price }}</p>
+                    <p class="text-gray-800 font-semibold mt-2">cat: {{ $product->category->name }}</p>
                     <p class="text-gray-600 mt-2">quantity: {{ $product->quantity}}</p>
                     <div class="mt-4 flex justify-between">
                         <a href="{{ route('products.edit', $product) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>

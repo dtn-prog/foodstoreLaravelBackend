@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CatController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -36,6 +37,15 @@ Route::controller(OrderController::class)->prefix('orders')->group(function () {
     Route::get('{order}/edit', 'edit')->name('orders.edit');
     Route::put('{order}', 'update')->name('orders.update');
     Route::delete('{order}', 'destroy')->name('orders.destroy');
+});
+
+Route::controller(CatController::class)->prefix('cats')->group(function () {
+    route::get('', 'index')->name('cats.index');
+    Route::get('create', 'create')->name('cats.create');
+    Route::post('', 'store')->name('cats.store');
+    Route::get('{cat}/edit', 'edit')->name('cats.edit');
+    Route::put('{cat}', 'update')->name('cats.update');
+    Route::delete('{cat}', 'destroy')->name('cats.destroy');
 });
 
 Route::get('login', [LoginController::class, 'create'])->name('login');

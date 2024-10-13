@@ -16,6 +16,19 @@
         </div>
 
         <div class="mb-4">
+            <label for="cat_id" class="block text-gray-700">Category</label>
+            <select name="cat_id" id="cat_id" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('cat_id') border-red-500 @enderror" required>
+                <option value="" disabled>Select a category</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ $product->cat_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                @endforeach
+            </select>
+            @error('cat_id')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-4">
             <label for="price" class="block text-gray-700">Price</label>
             <input type="number" name="price" id="price" value="{{ old('price', $product->price) }}" class="mt-1 block w-full p-2 border border-gray-300 rounded @error('price') border-red-500 @enderror" required>
             @error('price')
