@@ -9,6 +9,7 @@
             <h2 class="text-xl font-semibold">Order #{{ $order->id }}</h2>
             <h2 class="text-xl font-semibold">Order of user: {{ $order->user->name }}</h2>
             <p class="text-gray-600">Status: {{ ucfirst($order->status) }}</p>
+            <p class="text-gray-600">Payment method: {{ $order->payment_method }}</p>
             <p class="text-gray-600">Address: {{ $order->address }}</p>
             <p class="text-gray-600">Duration: {{ $order->duration }}</p>
             <p class="text-gray-600">Lat: {{ $order->lat }}</p>
