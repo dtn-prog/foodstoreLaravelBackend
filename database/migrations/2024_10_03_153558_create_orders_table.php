@@ -23,7 +23,6 @@ class CreateOrdersTable extends Migration
             ['confirmed','shipped', 'delivered', 'paid', 'return']);
             $table->enum('payment_method',
             ['cod','cc']);
-            // $table->foreignId('shipper_id')->constrained('users','id');
             $table->text('duration')->nullable();
             $table->double('lat')->nullable();
             $table->double('long')->nullable();
