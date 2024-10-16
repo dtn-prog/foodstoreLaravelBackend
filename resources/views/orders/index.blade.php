@@ -28,7 +28,7 @@
         <p class="text-gray-600">Lat: {{ $order->lat }}</p>
         <p class="text-gray-600">Long: {{ $order->long }}</p>
 
-        <p class="text-gray-600">Total Price: ${{ number_format($order->total_price, 2) }}</p> <!-- Display total price -->
+        <p class="text-gray-600">Total Price:{{$order->total_price}} đ</p>
 
         <h3 class="text-lg font-medium mt-4">Items:</h3>
         <table class="min-w-full border-collapse">
@@ -48,9 +48,9 @@
                         <td class="border px-4 py-2">
                             <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-16 h-16 object-cover">
                         </td>
-                        <td class="border px-4 py-2">${{ number_format($item->product->price, 2) }}</td>
+                        <td class="border px-4 py-2">{{ $item->product->price}} đ</td>
                         <td class="border px-4 py-2">{{ $item->quantity }}</td>
-                        <td class="border px-4 py-2">${{ number_format($item->product->price * $item->quantity, 2) }}</td>
+                        <td class="border px-4 py-2">{{ $item->product->price * $item->quantity }} đ</td>
                     </tr>
                 @endforeach
             </tbody>

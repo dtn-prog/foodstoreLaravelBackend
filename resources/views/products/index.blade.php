@@ -11,7 +11,7 @@
                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-gray-800">{{ $product->name }} | {{ $product->id }}</h3>
-                    <p class="text-gray-800 font-semibold mt-2">${{ $product->price }}</p>
+                    <p class="text-gray-800 font-semibold mt-2">{{ $product->price }} đ</p>
                     <p class="text-gray-800 font-semibold mt-2">cat: {{ $product->category->name }}</p>
                     <p class="text-gray-600 mt-2">quantity: {{ $product->quantity }}</p>
                     <div class="mt-4 flex justify-between">
