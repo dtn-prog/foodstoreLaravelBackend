@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\CatController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
@@ -31,3 +32,7 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 });
 
 Route::get('location',[LocationController::class, 'get']);
+
+Route::get('cats',[CatController::class, 'index']);
+
+Route::get('cats/products', [CatController::class, 'productsThroughCats']);
