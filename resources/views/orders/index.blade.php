@@ -4,6 +4,19 @@
 <div class="container mx-auto p-6">
     <h1 class="text-2xl font-bold mb-4">Orders</h1>
 
+    <!-- Search and Filter Form -->
+    <form method="GET" class="mb-6">
+        <input type="text" name="search" placeholder="Search by user or status" class="border p-2 rounded" />
+        <select name="status" class="border p-2 rounded">
+            <option value="">All Statuses</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="shipped">Shipped</option>
+            <option value="completed">Completed</option>
+            <option value="bombed">Bombed</option>
+        </select>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+    </form>
+
     @foreach($orders as $order)
         <div class="bg-white shadow-md rounded-lg p-4 mb-6">
             <h2 class="text-xl font-semibold">Order #{{ $order->id }}</h2>
@@ -40,6 +53,19 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- Edit Status Button -->
+            <form method="POST" action="{{ route('orders.update', $order->id) }}" class="mt-4">
+                @csrf
+                @method('PUT')
+                <select name="status" class="border p-2 rounded">
+                    <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                    <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
+                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                    <option value="bombed" {{ $order->status == 'bombed' ? 'selected' : '' }}>Bombed</option>
+                </select>
+                <button type="submit" class="bg-green-500 text-white p-2 rounded">Update Status</button>
+            </form>
         </div>
     @endforeach
 </div>
