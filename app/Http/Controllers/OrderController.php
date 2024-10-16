@@ -20,7 +20,10 @@ class OrderController extends Controller
             $query->where('status', $request->status);
         }
 
-        $orders = $query->get();
+        $orders = $query->get()->map(function ($order) {
+            $order->total_price = $order->totalPrice();
+            return $order;
+        });
 
         return view('orders.index', compact('orders'));
     }

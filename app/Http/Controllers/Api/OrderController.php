@@ -60,6 +60,7 @@ class OrderController extends Controller
                 "status"=> $order->status,
                 "address"=> $order->address,
                 "duration"=> $order->duration,
+                "total_price"=> $order->totalPrice(),
                 "payment_method"=> $order->payment_method,
                 "created_at"=> $order->created_at,
                 "lat"=> $order->lat,
