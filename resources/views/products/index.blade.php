@@ -3,7 +3,21 @@
 @section('content')
 <div class="container mx-auto mt-8 px-4">
     <h2 class="text-3xl font-semibold mb-6">Products</h2>
-    <a href="{{ route('products.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Product</a>
+
+    <div class="flex justify-between mb-4">
+        <a href="{{ route('products.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Product</a>
+
+        <form method="GET" action="{{ route('products.index') }}" class="flex items-center">
+            <input type="text" name="search" placeholder="Search by name or description" class="border rounded p-2" value="{{ request('search') }}">
+            <select name="cat_id" class="border rounded p-2 ml-2">
+                <option value="">All Categories</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('cat_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-2">Filter</button>
+        </form>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
         @foreach ($products as $product)
@@ -12,8 +26,8 @@
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-gray-800">{{ $product->name }} | {{ $product->id }}</h3>
                     <p class="text-gray-800 font-semibold mt-2">{{ $product->price }} đ</p>
-                    <p class="text-gray-800 font-semibold mt-2">cat: {{ $product->category->name }}</p>
-                    <p class="text-gray-600 mt-2">quantity: {{ $product->quantity }}</p>
+                    <p class="text-gray-800 font-semibold mt-2">Cat: {{ $product->category->name }}</p>
+                    <p class="text-gray-600 mt-2">Quantity: {{ $product->quantity }}</p>
                     <div class="mt-4 flex justify-between">
                         <a href="{{ route('products.edit', $product) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
                         <button onclick="document.getElementById('delete-box-{{ $product->id }}').showModal()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
