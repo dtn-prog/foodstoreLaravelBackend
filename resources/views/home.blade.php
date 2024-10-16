@@ -40,7 +40,7 @@
             </form>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        {{-- <div class="bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold mb-4">Register</h2>
             <form method="POST" action="{{ route('register') }}" onsubmit="return validatePasswords()">
                 @csrf
@@ -77,7 +77,7 @@
                 </div>
                 <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 rounded hover:bg-green-600">Register</button>
             </form>
-        </div>
+        </div> --}}
     </div>
     @endguest
 </div>

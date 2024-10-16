@@ -14,14 +14,12 @@
     <nav class="bg-gray-800 text-white py-2">
         <div class="container mx-auto flex justify-center">
             <a href="{{ route('home') }}" class="mx-4 hover:underline">Home</a>
-            <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
-            <a href="{{ route('users.index') }}" class="mx-4 hover:underline">Users</a>
-            <a href="{{ route('orders.index') }}" class="mx-4 hover:underline">Orders</a>
-            <a href="{{ route('cats.index') }}" class="mx-4 hover:underline">Cats</a>
-            {{--
-            <a href="{{ route('features.index') }}" class="mx-4 hover:underline">Features</a>
-            <a href="{{ route('restaurants.index') }}" class="mx-4 hover:underline">Restaurants</a>
-            <a href="{{ route('dishes.index') }}" class="mx-4 hover:underline">Dishes</a> --}}
+            @if(auth()->check() && auth()->user()->role === 'admin')
+                <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
+                <a href="{{ route('users.index') }}" class="mx-4 hover:underline">Users</a>
+                <a href="{{ route('orders.index') }}" class="mx-4 hover:underline">Orders</a>
+                <a href="{{ route('cats.index') }}" class="mx-4 hover:underline">Cats</a>
+            @endif
         </div>
     </nav>
     <div class="container mx-auto mt-6 p-4 bg-white rounded-lg shadow">
