@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             ->onDelete('cascade');
             $table->text('address');
             $table->enum('status',
-            ['confirmed','shipped', 'delivered', 'paid', 'return']);
+            ['confirmed','shipped', 'completed', 'bombed']);
             $table->enum('payment_method',
             ['cod','cc']);
             $table->text('duration')->nullable();
