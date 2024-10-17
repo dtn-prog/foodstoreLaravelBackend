@@ -16,6 +16,7 @@ class RegisterController extends Controller
                 'string',
                 'unique:users,phone',
                 'max:15',
+                'min:9',
                 'regex:/^\d{1,15}$/',
             ],
             'password' => ['required', 'string', 'confirmed'],

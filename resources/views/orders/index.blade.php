@@ -27,8 +27,7 @@
         <p class="text-gray-600">Duration: {{ $order->duration }}</p>
         <p class="text-gray-600">Lat: {{ $order->lat }}</p>
         <p class="text-gray-600">Long: {{ $order->long }}</p>
-
-        <p class="text-gray-600">Total Price:{{$order->total_price}} đ</p>
+        <p class="text-gray-600">Total Price: {{ $order->total_price }} đ</p>
 
         <h3 class="text-lg font-medium mt-4">Items:</h3>
         <table class="min-w-full border-collapse">
@@ -48,7 +47,7 @@
                         <td class="border px-4 py-2">
                             <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-16 h-16 object-cover">
                         </td>
-                        <td class="border px-4 py-2">{{ $item->product->price}} đ</td>
+                        <td class="border px-4 py-2">{{ $item->product->price }} đ</td>
                         <td class="border px-4 py-2">{{ $item->quantity }}</td>
                         <td class="border px-4 py-2">{{ $item->product->price * $item->quantity }} đ</td>
                     </tr>
@@ -68,7 +67,23 @@
             </select>
             <button type="submit" class="bg-green-500 text-white p-2 rounded">Update Status</button>
         </form>
+
+        <!-- Delete Button -->
+        <button onclick="document.getElementById('delete-box-{{ $order->id }}').showModal()" class="bg-red-500 text-white p-2 rounded mt-4">Delete Order</button>
+
+        <!-- Delete Confirmation Modal -->
+        <dialog id='delete-box-{{ $order->id }}' class="rounded-lg p-4">
+            <form method="POST" action="{{ route('orders.destroy', $order->id) }}" class="flex flex-col">
+                @csrf
+                @method('DELETE')
+                <p class="mb-4 text-gray-700">Are you sure you want to delete this order?</p>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
+                    <button type="button" onclick="document.getElementById('delete-box-{{ $order->id }}').close()" class="ml-3 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition duration-200">Cancel</button>
+                </div>
+            </form>
+        </dialog>
     </div>
-@endforeach
+    @endforeach
 </div>
 @endsection
