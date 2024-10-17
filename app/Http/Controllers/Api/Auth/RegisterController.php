@@ -19,7 +19,7 @@ class RegisterController extends Controller
                 'min:9',
                 'regex:/^\d{1,15}$/',
             ],
-            'password' => ['required', 'string', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed', 'min:6', 'max:255'],
         ]);
 
         $fields['password'] = bcrypt($fields['password']);
