@@ -34,6 +34,20 @@ class OrderController extends Controller
         ]);
 
         $order = Order::findOrFail($id);
+
+        if ($order->status == 'confirmed' && $request->status != 'confirmed') {
+            foreach ($order->items as $item) {
+                $product = $item->product;
+
+                if ($product->quantity >= $item->quantity) {
+                    $product->quantity -= $item->quantity;
+                    $product->save();
+                } else {
+                    return redirect()->back()->with('error', 'Not enough product quantity available.')->withInput();
+                }
+            }
+        }
+
         $order->status = $request->status;
         $order->save();
 
