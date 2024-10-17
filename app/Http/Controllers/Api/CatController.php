@@ -32,4 +32,20 @@ class CatController extends Controller
             ];
         }));
     }
+
+    public function productsByCat(Cat $cat) {
+        return response()->json([
+            'id' => $cat->id,
+            'name' => $cat->name,
+            'products' => $cat->products->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'desc' => $product->desc,
+                    'image' => $product->image,
+                ];
+            }),
+        ]);
+    }
 }

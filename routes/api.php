@@ -36,3 +36,4 @@ Route::get('location',[LocationController::class, 'get']);
 Route::get('cats',[CatController::class, 'index']);
 
 Route::get('cats/products', [CatController::class, 'productsThroughCats']);
+Route::get('cats/{cat}/products', [CatController::class, 'productsByCat']);
