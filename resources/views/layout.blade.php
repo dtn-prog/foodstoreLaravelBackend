@@ -31,7 +31,7 @@
         @yield('content')
     </div>
     <footer class="bg-gray-800 text-white text-center py-4 mt-6">
-        <p>&copy; nhóm 10 L01</p>
+        <p>&copy; nhóm 6 L01</p>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
