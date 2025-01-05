@@ -14,12 +14,10 @@
     <nav class="bg-gray-800 text-white py-2">
         <div class="container mx-auto flex justify-center">
             <a href="{{ route('home') }}" class="mx-4 hover:underline">Home</a>
-            @if(auth()->check() && auth()->user()->role === 'admin')
-                <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
-                <a href="{{ route('users.index') }}" class="mx-4 hover:underline">Users</a>
-                <a href="{{ route('orders.index') }}" class="mx-4 hover:underline">Orders</a>
-                <a href="{{ route('cats.index') }}" class="mx-4 hover:underline">Cats</a>
-            @endif
+            <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
+            <a href="{{ route('users.index') }}" class="mx-4 hover:underline">Users</a>
+            <a href="{{ route('orders.index') }}" class="mx-4 hover:underline">Orders</a>
+            <a href="{{ route('cats.index') }}" class="mx-4 hover:underline">Cats</a>
         </div>
     </nav>
     <div class="container mx-auto mt-6 p-4 bg-white rounded-lg shadow">

@@ -8,42 +8,40 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['admin'])->group(function () {
-    Route::controller(ProductController::class)->prefix('products')->group(function () {
-        Route::get('', 'index')->name('products.index');
-        Route::get('create', 'create')->name('products.create');
-        Route::post('', 'store')->name('products.store');
-        Route::get('{product}/edit', 'edit')->name('products.edit');
-        Route::put('{product}', 'update')->name('products.update');
-        Route::delete('{product}', 'destroy')->name('products.destroy');
-    });
+Route::controller(ProductController::class)->prefix('products')->group(function () {
+    Route::get('', 'index')->name('products.index');
+    Route::get('create', 'create')->name('products.create');
+    Route::post('', 'store')->name('products.store');
+    Route::get('{product}/edit', 'edit')->name('products.edit');
+    Route::put('{product}', 'update')->name('products.update');
+    Route::delete('{product}', 'destroy')->name('products.destroy');
+});
 
-    Route::controller(UserController::class)->prefix('users')->group(function () {
-        Route::get('', 'index')->name('users.index');
-        Route::get('create', 'create')->name('users.create');
-        Route::post('', 'store')->name('users.store');
-        Route::get('{user}/edit', 'edit')->name('users.edit');
-        Route::put('{user}', 'update')->name('users.update');
-        Route::delete('{user}', 'destroy')->name('users.destroy');
-    });
+Route::controller(UserController::class)->prefix('users')->group(function () {
+    Route::get('', 'index')->name('users.index');
+    Route::get('create', 'create')->name('users.create');
+    Route::post('', 'store')->name('users.store');
+    Route::get('{user}/edit', 'edit')->name('users.edit');
+    Route::put('{user}', 'update')->name('users.update');
+    Route::delete('{user}', 'destroy')->name('users.destroy');
+});
 
-    Route::controller(OrderController::class)->prefix('orders')->group(function () {
-        Route::get('', 'index')->name('orders.index');
-        Route::get('create', 'create')->name('orders.create');
-        Route::post('', 'store')->name('orders.store');
-        Route::get('{order}/edit', 'edit')->name('orders.edit');
-        Route::put('{order}', 'update')->name('orders.update');
-        Route::delete('{order}', 'destroy')->name('orders.destroy');
-    });
+Route::controller(OrderController::class)->prefix('orders')->group(function () {
+    Route::get('', 'index')->name('orders.index');
+    Route::get('create', 'create')->name('orders.create');
+    Route::post('', 'store')->name('orders.store');
+    Route::get('{order}/edit', 'edit')->name('orders.edit');
+    Route::put('{order}', 'update')->name('orders.update');
+    Route::delete('{order}', 'destroy')->name('orders.destroy');
+});
 
-    Route::controller(CatController::class)->prefix('cats')->group(function () {
-        Route::get('', 'index')->name('cats.index');
-        Route::get('create', 'create')->name('cats.create');
-        Route::post('', 'store')->name('cats.store');
-        Route::get('{cat}/edit', 'edit')->name('cats.edit');
-        Route::put('{cat}', 'update')->name('cats.update');
-        Route::delete('{cat}', 'destroy')->name('cats.destroy');
-    });
+Route::controller(CatController::class)->prefix('cats')->group(function () {
+    Route::get('', 'index')->name('cats.index');
+    Route::get('create', 'create')->name('cats.create');
+    Route::post('', 'store')->name('cats.store');
+    Route::get('{cat}/edit', 'edit')->name('cats.edit');
+    Route::put('{cat}', 'update')->name('cats.update');
+    Route::delete('{cat}', 'destroy')->name('cats.destroy');
 });
 
 // Non-admin routes
