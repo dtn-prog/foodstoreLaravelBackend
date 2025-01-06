@@ -9,7 +9,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(RoleController::class)->prefix('roles')->group(function () {
+// Roles Routes
+Route::controller(RoleController::class)->prefix('roles')->middleware('auth')->group(function () {
     Route::get('', 'index')->name('roles.index')->can('view roles');
     Route::get('create', 'create')->name('roles.create')->can('create roles');
     Route::post('', 'store')->name('roles.store')->can('create roles');
@@ -18,7 +19,7 @@ Route::controller(RoleController::class)->prefix('roles')->group(function () {
     Route::delete('{role}', 'destroy')->name('roles.destroy')->can('delete roles');
 });
 
-
+// Products Routes
 Route::controller(ProductController::class)
     ->prefix('products')
     ->middleware('auth')
@@ -31,8 +32,8 @@ Route::controller(ProductController::class)
         Route::delete('{product}', 'destroy')->name('products.destroy')->can('delete products');
     });
 
-
-Route::controller(UserController::class)->prefix('users')->group(function () {
+// Users Routes
+Route::controller(UserController::class)->prefix('users')->middleware('auth')->group(function () {
     Route::get('', 'index')->name('users.index')->can('view users');
     Route::get('create', 'create')->name('users.create')->can('create users');
     Route::post('', 'store')->name('users.store')->can('create users');
@@ -41,17 +42,22 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
     Route::delete('{user}', 'destroy')->name('users.destroy')->can('delete users');
 });
 
-Route::controller(OrderController::class)->prefix('orders')->group(function () {
-    Route::get('', 'index')->name('orders.index')->can('view orders');
-    // Route::post('', 'store')->name('orders.store')->can('create orders'); // Uncomment if you have a create method
-    Route::get('{order}/edit', 'edit')->name('orders.edit')->can('edit orders');
-    Route::put('{order}', 'update')->name('orders.update')->can('edit orders');
-    Route::delete('{order}', 'destroy')->name('orders.destroy')->can('delete orders');
-});
+// Orders Routes
+Route::controller(OrderController::class)
+    ->prefix('orders')
+    ->middleware('auth') // Apply auth middleware
+    ->group(function () {
+        Route::get('', 'index')->name('orders.index')->can('view orders');
+        Route::post('', 'store')->name('orders.store')->can('create orders'); // Uncommented for order creation
+        Route::get('{order}/edit', 'edit')->name('orders.edit')->can('edit orders');
+        Route::put('{order}', 'update')->name('orders.update')->can('edit orders');
+        Route::delete('{order}', 'destroy')->name('orders.destroy')->can('delete orders');
+    });
 
+// Cats Routes
 Route::controller(CatController::class)
     ->prefix('cats')
-    ->middleware('auth')
+    ->middleware('auth') // Apply auth middleware
     ->group(function () {
         Route::get('', 'index')->name('cats.index')->can('view cats');
         Route::get('create', 'create')->name('cats.create')->can('create cats');
@@ -60,6 +66,7 @@ Route::controller(CatController::class)
         Route::put('{cat}', 'update')->name('cats.update')->can('edit cats');
         Route::delete('{cat}', 'destroy')->name('cats.destroy')->can('delete cats');
     });
+
 
 // Non-admin routes
 Route::get('/', function () {
