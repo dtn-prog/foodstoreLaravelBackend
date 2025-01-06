@@ -19,9 +19,13 @@
             <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
             @endcan
 
+            @can('view cats')
+            <a href="{{ route('cats.index') }}" class="mx-4 hover:underline">Cats</a>
+            @endcan
+
             <a href="{{ route('users.index') }}" class="mx-4 hover:underline">Users</a>
             <a href="{{ route('orders.index') }}" class="mx-4 hover:underline">Orders</a>
-            <a href="{{ route('cats.index') }}" class="mx-4 hover:underline">Cats</a>
+
             <a href="{{ route('roles.index') }}" class="mx-4 hover:underline">roles</a>
         </div>
     </nav>

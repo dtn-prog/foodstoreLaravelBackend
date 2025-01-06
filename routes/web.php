@@ -50,14 +50,17 @@ Route::controller(OrderController::class)->prefix('orders')->group(function () {
     Route::delete('{order}', 'destroy')->name('orders.destroy');
 });
 
-Route::controller(CatController::class)->prefix('cats')->group(function () {
-    Route::get('', 'index')->name('cats.index');
-    Route::get('create', 'create')->name('cats.create');
-    Route::post('', 'store')->name('cats.store');
-    Route::get('{cat}/edit', 'edit')->name('cats.edit');
-    Route::put('{cat}', 'update')->name('cats.update');
-    Route::delete('{cat}', 'destroy')->name('cats.destroy');
-});
+Route::controller(CatController::class)
+    ->prefix('cats')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('', 'index')->name('cats.index')->can('view cats');
+        Route::get('create', 'create')->name('cats.create')->can('create cats');
+        Route::post('', 'store')->name('cats.store')->can('create cats');
+        Route::get('{cat}/edit', 'edit')->name('cats.edit')->can('edit cats');
+        Route::put('{cat}', 'update')->name('cats.update')->can('edit cats');
+        Route::delete('{cat}', 'destroy')->name('cats.destroy')->can('delete cats');
+    });
 
 // Non-admin routes
 Route::get('/', function () {

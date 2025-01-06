@@ -3,12 +3,10 @@
 @section('content')
 <div class="container mx-auto mt-8 px-4">
     <h1 class="text-3xl font-semibold mb-6">Categories</h1>
-    <a href="{{ route('cats.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Category</a>
 
-    {{-- Uncomment if you want to show success messages --}}
-    {{-- @if(session('success'))
-        <div class="bg-green-500 text-white p-2 rounded my-4">{{ session('success') }}</div>
-    @endif --}}
+    @can('create cats')
+        <a href="{{ route('cats.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Category</a>
+    @endcan
 
     <table class="min-w-full bg-white border border-gray-200 mt-4 rounded-lg overflow-hidden">
         <thead>
@@ -24,12 +22,17 @@
                     <td class="py-3 px-4">{{ $cat->id }}</td>
                     <td class="py-3 px-4">{{ $cat->name }}</td>
                     <td class="py-3 px-4">
-                        <a href="{{ route('cats.edit', $cat) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">Edit</a>
-                        <form action="{{ route('cats.destroy', $cat) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(event)">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
-                        </form>
+                        @can('edit cats')
+                            <a href="{{ route('cats.edit', $cat) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">Edit</a>
+                        @endcan
+
+                        @can('delete cats')
+                            <form action="{{ route('cats.destroy', $cat) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(event)">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
@@ -40,9 +43,7 @@
 <script>
     function confirmDelete(event) {
         event.preventDefault();
-
         const confirmed = confirm("Are you sure you want to delete this category?");
-
         if (confirmed) {
             event.target.submit();
         }
