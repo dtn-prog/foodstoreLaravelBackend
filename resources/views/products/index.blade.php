@@ -5,7 +5,9 @@
     <h2 class="text-3xl font-semibold mb-6">Products</h2>
 
     <div class="flex justify-between mb-4">
-        <a href="{{ route('products.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Product</a>
+        @can('create products')
+            <a href="{{ route('products.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Product</a>
+        @endcan
 
         <form method="GET" action="{{ route('products.index') }}" class="flex items-center">
             <input type="text" name="search" placeholder="Search by name or description" class="border rounded p-2" value="{{ request('search') }}">
@@ -29,8 +31,14 @@
                     <p class="text-gray-800 font-semibold mt-2">Cat: {{ $product->category->name }}</p>
                     <p class="text-gray-600 mt-2">Quantity: {{ $product->quantity }}</p>
                     <div class="mt-4 flex justify-between">
-                        <a href="{{ route('products.edit', $product) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
-                        <button onclick="document.getElementById('delete-box-{{ $product->id }}').showModal()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
+
+                        @can('edit products')
+                            <a href="{{ route('products.edit', $product) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
+                        @endcan
+
+                        @can('delete products')
+                            <button onclick="document.getElementById('delete-box-{{ $product->id }}').showModal()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
+                        @endcan
                     </div>
                 </div>
             </div>

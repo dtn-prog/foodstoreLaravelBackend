@@ -14,14 +14,7 @@
             <label for="phone" class="block text-sm font-medium text-gray-700">Phone:</label>
             <input type="tel" class="mt-1 block w-full border border-gray-300 rounded-md p-2" id="phone" name="phone" value="{{ $user->phone }}" required>
         </div>
-        <div class="mb-4">
-            <label for="role" class="block text-sm font-medium text-gray-700">Role:</label>
-            <select id="role" name="role" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
-                <option value="customer" {{ $user->role === 'customer' ? 'selected' : '' }}>Customer</option>
-                <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                {{-- <option value="shipper" {{ $user->role === 'shipper' ? 'selected' : '' }}>Shipper</option> --}}
-            </select>
-        </div>
+
         <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700">Password (leave blank to keep current):</label>
             <input type="password" class="mt-1 block w-full border border-gray-300 rounded-md p-2" id="password" name="password">
@@ -30,25 +23,19 @@
             <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password:</label>
             <input type="password" class="mt-1 block w-full border border-gray-300 rounded-md p-2" id="password_confirmation" name="password_confirmation">
         </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Roles:</label>
+            @foreach ($roles as $role)
+                <div class="flex items-center mt-2">
+                    <input type="checkbox" name="roles[]" value="{{ $role->name }}"
+                        {{ $userRoles->contains($role->name) ? 'checked' : '' }} class="mr-2">
+                    <label class="text-gray-700">{{ $role->name }}</label>
+                </div>
+            @endforeach
+        </div>
+
         <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 rounded hover:bg-green-600">Update User</button>
     </form>
 </div>
-@endsection
-
-@section('js')
-<script>
-function validatePasswordConfirmation() {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('password_confirmation').value;
-
-    if (password || confirmPassword) {
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return false;
-        }
-    }
-
-    return true;
-}
-</script>
 @endsection
