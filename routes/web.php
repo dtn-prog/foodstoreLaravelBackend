@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CatController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -21,14 +20,6 @@ Route::controller(RoleController::class)->prefix('roles')->group(function () {
     Route::delete('{role}', 'destroy')->name('roles.destroy');
 });
 
-// Route::controller(PermissionController::class)->prefix('permissions')->group(function () {
-//     Route::get('', 'index')->name('permissions.index');
-//     Route::get('create', 'create')->name('permissions.create');
-//     Route::post('', 'store')->name('permissions.store');
-//     Route::get('{permission}/edit', 'edit')->name('permissions.edit');
-//     Route::put('{permission}', 'update')->name('permissions.update');
-//     Route::delete('{permission}', 'destroy')->name('permissions.destroy');
-// });
 
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('products.index');
