@@ -14,14 +14,13 @@
             <label for="phone" class="block text-sm font-medium text-gray-700">Phone:</label>
             <input type="tel" class="mt-1 block w-full border border-gray-300 rounded-md p-2" id="phone" name="phone" value="{{ $user->phone }}" required>
         </div>
-        <div class="mb-4">
+        {{-- <div class="mb-4">
             <label for="role" class="block text-sm font-medium text-gray-700">Role:</label>
             <select id="role" name="role" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
                 <option value="customer" {{ $user->role === 'customer' ? 'selected' : '' }}>Customer</option>
                 <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                {{-- <option value="shipper" {{ $user->role === 'shipper' ? 'selected' : '' }}>Shipper</option> --}}
             </select>
-        </div>
+        </div> --}}
         <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700">Password (leave blank to keep current):</label>
             <input type="password" class="mt-1 block w-full border border-gray-300 rounded-md p-2" id="password" name="password">

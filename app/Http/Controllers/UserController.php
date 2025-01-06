@@ -40,14 +40,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|unique:users|max:15',
-            'role' => 'required|in:admin,customer,shipper',
             'password' => 'required|string|confirmed',
         ]);
 
         User::create([
             'name' => $request->name,
             'phone' => $request->phone,
-            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
@@ -92,13 +90,11 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:users,phone,' . $user->id,
-            'role' => 'required|in:admin,customer,shipper',
             'password' => 'nullable|string|confirmed',
         ]);
 
         $user->name = $request->name;
         $user->phone = $request->phone;
-        $user->role = $request->role;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
