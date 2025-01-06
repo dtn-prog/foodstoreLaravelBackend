@@ -43,7 +43,7 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
 
 Route::controller(OrderController::class)->prefix('orders')->group(function () {
     Route::get('', 'index')->name('orders.index');
-    Route::get('create', 'create')->name('orders.create');
+    // Route::get('create', 'create')->name('orders.create');
     Route::post('', 'store')->name('orders.store');
     Route::get('{order}/edit', 'edit')->name('orders.edit');
     Route::put('{order}', 'update')->name('orders.update');
