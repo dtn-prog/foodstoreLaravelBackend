@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
         $user = User::firstOrCreate([
             'name' => 'admin',
             'phone' => '0989672531',
+            'blacklisted' => false,
         ], [
             'password' => bcrypt('admin'),
         ]);
