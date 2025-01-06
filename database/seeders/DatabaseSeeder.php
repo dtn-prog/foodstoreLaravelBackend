@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
 
         // Create the admin role
         $role = Role::firstOrCreate(['name' => 'admin']);
+        Role::create(['name'=>'customer']);
 
         // Create an admin user
         $user = User::firstOrCreate([
