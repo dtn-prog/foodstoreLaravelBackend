@@ -19,14 +19,18 @@ Route::controller(RoleController::class)->prefix('roles')->group(function () {
 });
 
 
-Route::controller(ProductController::class)->prefix('products')->group(function () {
-    Route::get('', 'index')->name('products.index');
-    Route::get('create', 'create')->name('products.create');
-    Route::post('', 'store')->name('products.store');
-    Route::get('{product}/edit', 'edit')->name('products.edit');
-    Route::put('{product}', 'update')->name('products.update');
-    Route::delete('{product}', 'destroy')->name('products.destroy');
-});
+Route::controller(ProductController::class)
+    ->prefix('products')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('', 'index')->name('products.index')->can('view products');
+        Route::get('create', 'create')->name('products.create')->can('create products');
+        Route::post('', 'store')->name('products.store')->can('create products');
+        Route::get('{product}/edit', 'edit')->name('products.edit')->can('edit products');
+        Route::put('{product}', 'update')->name('products.update')->can('edit products');
+        Route::delete('{product}', 'destroy')->name('products.destroy')->can('delete products');
+    });
+
 
 Route::controller(UserController::class)->prefix('users')->group(function () {
     Route::get('', 'index')->name('users.index');
