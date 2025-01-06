@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
         // Create the admin role
         $role = Role::firstOrCreate(['name' => 'admin']);
-        Role::create(['name'=>'customer']);
+        Role::firstOrCreate(['name' => 'customer']);
 
         // Create an admin user
         $user = User::firstOrCreate([
@@ -47,6 +47,9 @@ class DatabaseSeeder extends Seeder
         ], [
             'password' => bcrypt('admin'),
         ]);
+
+        // Assign all permissions to the admin role
+        $role->givePermissionTo(Permission::all());
 
         // Assign the role to the user
         $user->assignRole($role);
