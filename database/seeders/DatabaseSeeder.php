@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
             'manage users',
         ];
-        // \App\Models\User::factory(10)->create();
+
         Permission::create(['name'=>$permissions]);
 
         Role::create(['name'=>'admin']);
