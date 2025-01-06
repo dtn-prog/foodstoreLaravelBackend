@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +16,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $permissions = [
+            'view products',
+            'create products',
+            'edit products',
+            'delete products',
+
+            'view orders',
+            'edit orders',
+            'delete orders',
+
+            'manage users',
+        ];
         // \App\Models\User::factory(10)->create();
+        Permission::create(['name'=>$permissions]);
+
         Role::create(['name'=>'admin']);
 
         $user = User::create([
