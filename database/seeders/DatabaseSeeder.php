@@ -22,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'edit products',
             'delete products',
 
+            'view cats',
+            'create cats',
+            'edit cats',
+            'delete cats',
+
             'view orders',
             'edit orders',
             'delete orders',

@@ -15,7 +15,7 @@
         <div class="container mx-auto flex justify-center">
             <a href="{{ route('home') }}" class="mx-4 hover:underline">Home</a>
 
-            @can('edit products')
+            @can('view products')
             <a href="{{ route('products.index') }}" class="mx-4 hover:underline">Products</a>
             @endcan
 
