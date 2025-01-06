@@ -10,17 +10,11 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('roles')->get();
         return view('users.index', compact('users'));
     }
-
     /**
      * Show the form for creating a new resource.
      *

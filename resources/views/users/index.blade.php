@@ -14,6 +14,7 @@
                 <tr>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Name</th>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Phone</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Roles</th> <!-- New Roles Column -->
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Actions</th>
                 </tr>
             </thead>
@@ -22,6 +23,15 @@
                 <tr>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $user->name }}</td>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $user->phone }}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">
+                        @if($user->roles->isEmpty())
+                            No roles assigned
+                        @else
+                            @foreach($user->roles as $role)
+                                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">{{ $role->name }}</span>
+                            @endforeach
+                        @endif
+                    </td>
                     <td class="py-2 px-4 border-b border-gray-300">
                         <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
