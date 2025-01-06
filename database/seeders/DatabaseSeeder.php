@@ -31,8 +31,17 @@ class DatabaseSeeder extends Seeder
             'edit orders',
             'delete orders',
 
-            'manage users',
-            'blacklist users'
+            'view users',
+            'create users',
+            'edit users',
+            'delete users',
+
+            'view roles',
+            'create roles',
+            'edit roles',
+            'delete roles',
+
+            // 'blacklist users'
         ];
 
         // Create each permission
