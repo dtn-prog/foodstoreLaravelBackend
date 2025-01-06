@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             'delete orders',
 
             'manage users',
+            'blacklist users'
         ];
 
         // Create each permission
