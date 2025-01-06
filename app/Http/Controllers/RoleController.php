@@ -23,11 +23,13 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the role name, ensuring it is unique
         $request->validate(['name' => 'required|unique:roles']);
 
+        // Create the role
         $role = Role::create(['name' => $request->name]);
 
-        // Assign selected permissions
+        // Assign selected permissions by name
         if ($request->has('permissions')) {
             $role->givePermissionTo($request->permissions);
         }
@@ -38,20 +40,27 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        $rolePermissions = $role->permissions->pluck('id')->toArray(); // Get assigned permissions
+        $rolePermissions = $role->permissions->pluck('name')->toArray(); // Get assigned permission names
         return view('roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     public function update(Request $request, Role $role)
     {
+        // Validate the role name, ensuring it is unique
         $request->validate(['name' => 'required|unique:roles,name,' . $role->id]);
 
+        // Update the role name
         $role->update(['name' => $request->name]);
 
-        // Sync permissions
+        // Check if permissions were submitted
         if ($request->has('permissions')) {
-            $role->syncPermissions($request->permissions);
+            // Get the submitted permission names
+            $permissionNames = $request->permissions;
+
+            // Sync permissions using names
+            $role->syncPermissions($permissionNames);
         } else {
+            // If no permissions are submitted, clear all permissions
             $role->syncPermissions([]);
         }
 

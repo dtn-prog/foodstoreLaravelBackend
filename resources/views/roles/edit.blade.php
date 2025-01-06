@@ -12,8 +12,8 @@
         <h3 class="mt-4 text-lg font-semibold">Permissions</h3>
         @foreach ($permissions as $permission)
             <div class="flex items-center mt-2">
-                <input type="checkbox" name="permissions[]" value="{{ $permission->id }}"
-                    {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} class="mr-2">
+                <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
+                    {{ in_array($permission->name, $rolePermissions) ? 'checked' : '' }} class="mr-2">
                 <label class="text-gray-700">{{ $permission->name }}</label>
             </div>
         @endforeach
