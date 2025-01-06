@@ -27,7 +27,9 @@
             <a href="{{ route('users.index') }}" class="mx-4 hover:underline">Users</a>
             @endcan
 
+            @can('view orders')
             <a href="{{ route('orders.index') }}" class="mx-4 hover:underline">Orders</a>
+            @endcan
 
             <a href="{{ route('roles.index') }}" class="mx-4 hover:underline">roles</a>
         </div>

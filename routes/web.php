@@ -42,12 +42,11 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
 });
 
 Route::controller(OrderController::class)->prefix('orders')->group(function () {
-    Route::get('', 'index')->name('orders.index');
-    // Route::get('create', 'create')->name('orders.create');
-    Route::post('', 'store')->name('orders.store');
-    Route::get('{order}/edit', 'edit')->name('orders.edit');
-    Route::put('{order}', 'update')->name('orders.update');
-    Route::delete('{order}', 'destroy')->name('orders.destroy');
+    Route::get('', 'index')->name('orders.index')->can('view orders');
+    // Route::post('', 'store')->name('orders.store')->can('create orders'); // Uncomment if you have a create method
+    Route::get('{order}/edit', 'edit')->name('orders.edit')->can('edit orders');
+    Route::put('{order}', 'update')->name('orders.update')->can('edit orders');
+    Route::delete('{order}', 'destroy')->name('orders.destroy')->can('delete orders');
 });
 
 Route::controller(CatController::class)
