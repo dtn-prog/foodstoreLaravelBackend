@@ -17,8 +17,13 @@ Route::middleware(['auth:sanctum', 'check.blacklisted'])->get('/user', function 
 
 // Group for routes that require authentication and blacklist check
 Route::middleware(['auth:sanctum', 'check.blacklisted'])->group(function() {
-    Route::post('send-otp', [OtpController::class, 'sendOtp'])->name('api.send.otp');
-    Route::post('verify-otp', [OtpController::class, 'verifyOtp'])->name('api.verify.otp');
+    Route::post('send-otp', [OtpController::class, 'sendOtp'])
+        ->name('api.send.otp')
+        ->middleware('throttle:5,1');
+
+    Route::post('verify-otp', [OtpController::class, 'verifyOtp'])
+        ->name('api.verify.otp')
+        ->middleware('throttle:5,1');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('api.logout');
 
@@ -28,9 +33,12 @@ Route::middleware(['auth:sanctum', 'check.blacklisted'])->group(function() {
 
 // Password reset routes (not requiring blacklisted check)
 Route::post('password/reset/request', [OtpController::class, 'requestPasswordReset'])
-    ->name('api.password.reset.request');
+    ->name('api.password.reset.request')
+    ->middleware('throttle:5,1');
+
 Route::post('password/reset/verify', [OtpController::class, 'verifyPasswordReset'])
-    ->name('api.password.reset.verify');
+    ->name('api.password.reset.verify')
+    ->middleware('throttle:5,1');
 
 // Registration route (not requiring blacklisted check)
 Route::post('register', [RegisterController::class, 'register'])->name('api.register');

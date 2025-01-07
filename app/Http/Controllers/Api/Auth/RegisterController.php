@@ -15,7 +15,7 @@ class RegisterController extends Controller
                 'required',
                 'string',
                 'unique:users,phone',
-                'max:15',
+                'max:10',
                 'min:9',
                 'regex:/^\d{1,15}$/',
             ],
