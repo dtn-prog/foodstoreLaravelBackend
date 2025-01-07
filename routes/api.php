@@ -16,10 +16,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function() {
-    // Route to send OTP
     Route::post('send-otp', [OtpController::class, 'sendOtp'])->name('api.send.otp');
 
-    // Route to verify OTP
     Route::post('verify-otp', [OtpController::class, 'verifyOtp'])->name('api.verify.otp');
 });
 

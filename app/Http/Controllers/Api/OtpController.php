@@ -21,8 +21,14 @@ class OtpController extends Controller
         $user->pin = $otp;
         $user->save();
 
+        // Format the phone number: replace leading 0 with 84
+        $phone = $user->phone;
+        if (strpos($phone, '0') === 0) {
+            $phone = '84' . substr($phone, 1);
+        }
+
         // Send OTP via SMS
-        $this->sendSms($user->phone, $otp);
+        $this->sendSms($phone, $otp);
 
         return response()->json(['message' => 'OTP sent successfully.']);
     }
