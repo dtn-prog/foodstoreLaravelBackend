@@ -28,6 +28,7 @@ Route::post('password/reset/verify', [OtpController::class, 'verifyPasswordReset
 
 
 Route::post('register', [RegisterController::class, 'register'])->name('api.register');
+
 Route::post('login', [LoginController::class, 'login'])->name('api.login');
 
 

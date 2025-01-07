@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class LoginController extends Controller
 {
@@ -18,6 +19,13 @@ class LoginController extends Controller
         $credentials = $request->only('phone', 'password');
 
         if (Auth::attempt($credentials)) {
+            // Check user's role
+            $user = Auth::user();
+            if ($user->hasRole('customer')) {
+                Auth::logout(); // Log out the customer
+                return redirect()->back()->withErrors(['phone' => 'You do not have access to the admin area.']);
+            }
+
             return redirect(route('home'))->with('success', 'Login successful!');
         }
 

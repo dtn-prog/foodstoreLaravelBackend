@@ -18,7 +18,7 @@ class CheckBlacklisted
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check() && Auth::user()->isBlacklisted()) {
-            Auth::logout();
+            $request->user()->currentAccessToken()->delete();
             return response()->json([
                 'message' => 'you are banned.'
             ], 403);

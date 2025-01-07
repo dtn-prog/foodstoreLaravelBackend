@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
@@ -20,8 +19,17 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
+        // Attempt to log in the user
         if (auth()->attempt($fields)) {
             $user = auth()->user();
+
+            // Check if the user is blacklisted
+            if ($user->blacklisted) {
+                Auth::logout(); // Log out the user
+                return response()->json(['message' => 'Your account is blacklisted.'], 403);
+            }
+
+            // Create a token for the user
             $token = $user->createToken('foodstore')->plainTextToken;
 
             return response()->json([
@@ -31,13 +39,12 @@ class LoginController extends Controller
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);
-
     }
 
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
 
-        $response = ['message'=>'loged out'];
+        $response = ['message' => 'Logged out'];
 
         return response()->json($response);
     }
