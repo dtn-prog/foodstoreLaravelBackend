@@ -39,7 +39,7 @@
                             <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
                         @endcan
                         @can('delete users')
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
+                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline" onsubmit="return confirmDelete();">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
@@ -52,4 +52,10 @@
         </table>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this user?');
+    }
+</script>
 @endsection
