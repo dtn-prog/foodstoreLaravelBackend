@@ -5,6 +5,7 @@ use \Log;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class OtpController extends Controller
 {
@@ -22,10 +23,11 @@ class OtpController extends Controller
         // Generate a random 6-digit OTP
         $otp = rand(100000, 999999);
 
-        // Store OTP in the user's pin field
-        $user->pin = $otp;
+        // Store hashed OTP in the user's pin field
+        $user->pin = Hash::make($otp);
         $user->save();
 
+        // Format the phone number: replace leading 0 with 84
         $phone = $user->phone;
         if (strpos($phone, '0') === 0) {
             $phone = '84' . substr($phone, 1);
@@ -52,10 +54,11 @@ class OtpController extends Controller
             return response()->json(['message' => 'User not found.'], 404);
         }
 
-        if ($user->pin == $request->input('otp')) {
+        // Verify the hashed OTP
+        if (Hash::check($request->input('otp'), $user->pin)) {
             // Reset the password
             $user->password = bcrypt($request->input('new_password'));
-            $user->pin = null;
+            $user->pin = null; // Clear the OTP after verification
             $user->phone_verified_at = now(); // Mark phone as verified
             $user->save();
 
@@ -73,8 +76,8 @@ class OtpController extends Controller
         // Generate a random 6-digit OTP
         $otp = rand(100000, 999999);
 
-        // Store OTP in the user's pin field
-        $user->pin = $otp;
+        // Store hashed OTP in the user's pin field
+        $user->pin = Hash::make($otp);
         $user->save();
 
         // Format the phone number: replace leading 0 with 84
@@ -99,8 +102,9 @@ class OtpController extends Controller
 
         $otp = $request->input('otp');
 
-        if ($user->pin == $otp) {
-            $user->pin = null;
+        // Verify the hashed OTP
+        if (Hash::check($otp, $user->pin)) {
+            $user->pin = null; // Clear the OTP after verification
             $user->phone_verified_at = now();
             $user->save();
 
@@ -150,4 +154,3 @@ class OtpController extends Controller
         }
     }
 }
-
