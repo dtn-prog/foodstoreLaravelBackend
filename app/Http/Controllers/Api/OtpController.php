@@ -57,8 +57,8 @@ class OtpController extends Controller
             return response()->json(['message' => 'User not found.'], 404);
         }
 
-        // Check if OTP is expired (3 minutes)
-        if ($user->otp_sent_at && Carbon::now()->diffInMinutes($user->otp_sent_at) > 3) {
+        // Check if OTP is expired (1 minutes)
+        if ($user->otp_sent_at && Carbon::now()->diffInMinutes($user->otp_sent_at) > 1) {
             $user->pin = null; // Clear the OTP if expired
             $user->otp_sent_at = null; // Clear the timestamp
             $user->save();
@@ -115,8 +115,8 @@ class OtpController extends Controller
 
         $otp = $request->input('otp');
 
-        // Check if OTP is expired (3 minutes)
-        if ($user->otp_sent_at && Carbon::now()->diffInMinutes($user->otp_sent_at) > 3) {
+        // Check if OTP is expired (1 minutes)
+        if ($user->otp_sent_at && Carbon::now()->diffInMinutes($user->otp_sent_at) > 1) {
             $user->pin = null; // Clear the OTP if expired
             $user->otp_sent_at = null; // Clear the timestamp
             $user->save();
