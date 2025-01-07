@@ -48,6 +48,8 @@ class RegisterController extends Controller
 
         $token = $user->createToken('foodstore')->plainTextToken;
 
+        $user['phone_verified_at'] = $user->phone_verified_at;
+
         $response = [
             'user' => $user,
             'token' => $token,
