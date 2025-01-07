@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cat;
 use App\Models\Location;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -70,5 +71,12 @@ class DatabaseSeeder extends Seeder
         $user->assignRole($role);
 
         Location::create(['lat'=>20.971834, 'long'=>105.7871277]);
+
+        // Create multiple cats
+        $cats = ['burger', 'noodle', 'pizza', 'sushi'];
+
+        foreach ($cats as $catName) {
+            Cat::firstOrCreate(['name' => $catName]);
+        }
     }
 }
