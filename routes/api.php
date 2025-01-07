@@ -28,10 +28,15 @@ Route::post('login', [LoginController::class, 'login'])->name('api.login');
 Route::middleware('auth:sanctum')->group(function() {
     Route::post('logout', [LoginController::class, 'logout'])->name('api.logout');
 
-    Route::post('orders/place', [OrderController::class, 'place'])->name("api.orders.place");
+    // Route::post('orders/place', [OrderController::class, 'place'])->name("api.orders.place");
 
     Route::get('orders/history', [OrderController::class, 'history'])->name("api.orders.history");
 });
+
+Route::middleware(['auth:sanctum', 'check.phone.verified'])->group(function() {
+    Route::post('orders/place', [OrderController::class, 'place'])->name("api.orders.place");
+});
+
 
 
 Route::controller(ProductController::class)->prefix('products')->group(function () {
