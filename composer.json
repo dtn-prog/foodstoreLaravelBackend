@@ -12,6 +12,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
+        "pear/http_request2": "^2.6",
         "spatie/laravel-permission": "^6.10"
     },
     "require-dev": {
