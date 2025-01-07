@@ -20,7 +20,7 @@ class CheckBlacklisted
         if (Auth::check() && Auth::user()->isBlacklisted()) {
             Auth::logout();
             return response()->json([
-                'message' => 'You must verify your phone number before placing an order.'
+                'message' => 'you are banned.'
             ], 403);
         }
 

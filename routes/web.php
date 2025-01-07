@@ -84,34 +84,3 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('register', [RegisterController::class, 'create'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 
-Route::get('/send-otp', function() {
-    $infobip_api_key = env('INFOBIP_API_KEY');
-    $infobip_base_url = env('INFOBIP_BASE_URL');
-
-    $request = new HTTP_Request2();
-    $request->setUrl("https://" . $infobip_base_url . "/sms/2/text/advanced");
-    $request->setMethod(HTTP_Request2::METHOD_POST);
-    $request->setConfig(array(
-        'follow_redirects' => TRUE
-    ));
-
-    $request->setHeader(array(
-        'Authorization' => 'App ' . $infobip_api_key,
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json'
-    ));
-    $request->setBody('{"messages":[{"destinations":[{"to":"84989674293"}],"from":"ServiceSMS","text":"123456"}]}');
-    try {
-        $response = $request->send();
-        if ($response->getStatus() == 200) {
-            echo $response->getBody();
-        }
-        else {
-            echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-            $response->getReasonPhrase();
-        }
-    }
-    catch(HTTP_Request2_Exception $e) {
-        echo 'Error: ' . $e->getMessage();
-    }
-});
