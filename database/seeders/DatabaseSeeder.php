@@ -68,5 +68,7 @@ class DatabaseSeeder extends Seeder
 
         // Assign the role to the user
         $user->assignRole($role);
+
+        Location::create(['lat'=>20.971834, 'long'=>105.7871277]);
     }
 }
