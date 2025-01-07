@@ -43,7 +43,7 @@ Route::controller(UserController::class)->prefix('users')->middleware('auth')->g
     Route::put('{user}', 'update')->name('users.update')->can('edit users');
     Route::delete('{user}', 'destroy')->name('users.destroy')->can('delete users');
     Route::post('{user}/blacklist', 'blacklist')->name('users.blacklist')->can('blacklist users');
-    Route::post('{user}/unblacklist', 'unblacklist')->name('users.unblacklist')->can('unblacklist users');
+    Route::post('{user}/unblacklist', 'unblacklist')->name('users.unblacklist')->can('blacklist users');
 });
 
 // Orders Routes
