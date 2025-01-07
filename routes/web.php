@@ -8,14 +8,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Infobip\Api\SmsApi;
-use Infobip\ApiException;
-use Infobip\Configuration;
-use Infobip\Model\SmsDestination;
-use Infobip\Model\SmsMessage;
-use Infobip\Model\SmsRequest;
-
-use Infobip\Model\SmsTextContent;
 
 
 
