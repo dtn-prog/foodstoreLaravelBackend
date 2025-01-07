@@ -44,6 +44,8 @@ class RegisterController extends Controller
 
         $user = User::create($fields);
 
+        $user->assignRole('customer');
+
         $token = $user->createToken('foodstore')->plainTextToken;
 
         $response = [
