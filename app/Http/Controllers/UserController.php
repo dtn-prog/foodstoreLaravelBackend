@@ -45,6 +45,7 @@ class UserController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'blacklisted'=>false
         ]);
 
         // Assign roles if any are selected
@@ -96,7 +97,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:users,phone,' . $user->id,
             'password' => 'nullable|string|confirmed',
-            'roles' => 'array', // Validate roles as an array
+            'roles' => 'array',
         ]);
 
         $user->name = $request->name;
