@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->timestamp('phone_verified_at')->nullable();
             $table->boolean('blacklisted');
+            $table->integer('number_of_bombs')->default(0);
             $table->timestamp('otp_sent_at')->nullable();
             $table->string('password')->default(false);
             $table->string('pin')->nullable();
