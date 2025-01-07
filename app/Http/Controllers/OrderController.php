@@ -48,6 +48,12 @@ class OrderController extends Controller
             }
         }
 
+        // Increase the number_of_bombs if the status is set to 'bombed'
+        if ($request->status == 'bombed') {
+            $user = $order->user;
+            $user->increment('number_of_bombs');
+        }
+
         $order->status = $request->status;
         $order->save();
 

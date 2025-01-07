@@ -18,6 +18,7 @@
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Phone</th>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Roles</th>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Status</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Bombs</th> <!-- New column -->
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Actions</th>
                 </tr>
             </thead>
@@ -42,6 +43,7 @@
                             <span class="text-green-500">Active</span>
                         @endif
                     </td>
+                    <td class="py-2 px-4 border-b border-gray-300">{{ $user->number_of_bombs }}</td> <!-- Display number of bombs -->
                     <td class="py-2 px-4 border-b border-gray-300">
                         @can('edit users')
                             <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
