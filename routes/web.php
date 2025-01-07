@@ -87,7 +87,6 @@ Route::get('/send-otp', function() {
     $infobip_base_url = env('INFOBIP_BASE_URL');
 
     $request = new HTTP_Request2();
-    // $request->setUrl("https://${infobip_base_url}/sms/2/text/advanced");
     $request->setUrl("https://" . $infobip_base_url . "/sms/2/text/advanced");
     $request->setMethod(HTTP_Request2::METHOD_POST);
     $request->setConfig(array(
