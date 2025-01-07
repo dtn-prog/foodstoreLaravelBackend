@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->boolean('blacklisted');
             $table->string('password')->default(false);
+            $table->string('pin')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
