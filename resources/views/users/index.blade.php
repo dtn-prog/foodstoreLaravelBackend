@@ -17,6 +17,7 @@
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Name</th>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Phone</th>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Roles</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Status</th>
                     <th class="py-2 px-4 border-b border-gray-300 text-left">Actions</th>
                 </tr>
             </thead>
@@ -35,6 +36,13 @@
                         @endif
                     </td>
                     <td class="py-2 px-4 border-b border-gray-300">
+                        @if ($user->isBlacklisted())
+                            <span class="text-red-500">Blacklisted</span>
+                        @else
+                            <span class="text-green-500">Active</span>
+                        @endif
+                    </td>
+                    <td class="py-2 px-4 border-b border-gray-300">
                         @can('edit users')
                             <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
                         @endcan
@@ -44,6 +52,19 @@
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
                             </form>
+                        @endcan
+                        @can('blacklist users')
+                            @if ($user->isBlacklisted())
+                                <form action="{{ route('users.unblacklist', $user->id) }}" method="POST" class="inline" onsubmit="return confirmUnblacklist();">
+                                    @csrf
+                                    <button type="submit" class="text-blue-500 hover:text-blue-700">Unblacklist</button>
+                                </form>
+                            @else
+                                <form action="{{ route('users.blacklist', $user->id) }}" method="POST" class="inline" onsubmit="return confirmBlacklist();">
+                                    @csrf
+                                    <button type="submit" class="text-yellow-500 hover:text-yellow-700">Blacklist</button>
+                                </form>
+                            @endif
                         @endcan
                     </td>
                 </tr>
@@ -56,6 +77,14 @@
 <script>
     function confirmDelete() {
         return confirm('Are you sure you want to delete this user?');
+    }
+
+    function confirmBlacklist() {
+        return confirm('Are you sure you want to blacklist this user?');
+    }
+
+    function confirmUnblacklist() {
+        return confirm('Are you sure you want to unblacklist this user?');
     }
 </script>
 @endsection

@@ -13,6 +13,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    public function isBlacklisted()
+    {
+        return $this->blacklisted;
+    }
+
     protected $guarded = [];
 
     /**

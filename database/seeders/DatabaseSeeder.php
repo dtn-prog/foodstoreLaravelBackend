@@ -42,8 +42,7 @@ class DatabaseSeeder extends Seeder
             'create roles',
             'edit roles',
             'delete roles',
-
-            // 'blacklist users'
+            'blacklist users'
         ];
 
         // Create each permission

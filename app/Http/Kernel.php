@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'check.phone.verified' => \App\Http\Middleware\CheckPhoneVerified::class,
+        'check.blacklisted' => \App\Http\Middleware\CheckBlacklisted::class,
     ];
 }

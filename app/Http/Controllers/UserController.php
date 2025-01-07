@@ -10,6 +10,22 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function blacklist(User $user)
+    {
+        $user->blacklisted = true;
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User blacklisted successfully.');
+    }
+
+    public function unblacklist(User $user)
+    {
+        $user->blacklisted = false;
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User unblacklisted successfully.');
+    }
+
     public function index()
     {
         $users = User::with('roles')->get();
