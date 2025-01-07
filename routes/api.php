@@ -10,37 +10,36 @@ use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Route to get the authenticated user
+Route::middleware(['auth:sanctum', 'check.blacklisted'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->group(function() {
+// Group for routes that require authentication and blacklist check
+Route::middleware(['auth:sanctum', 'check.blacklisted'])->group(function() {
     Route::post('send-otp', [OtpController::class, 'sendOtp'])->name('api.send.otp');
-
     Route::post('verify-otp', [OtpController::class, 'verifyOtp'])->name('api.verify.otp');
-});
 
-Route::post('password/reset/request', [OtpController::class, 'requestPasswordReset'])
-->name('api.password.reset.request');
-Route::post('password/reset/verify', [OtpController::class, 'verifyPasswordReset'])
-->name('api.password.reset.verify');
-
-
-Route::post('register', [RegisterController::class, 'register'])->name('api.register');
-
-Route::post('login', [LoginController::class, 'login'])->name('api.login');
-
-
-Route::middleware('auth:sanctum')->group(function() {
     Route::post('logout', [LoginController::class, 'logout'])->name('api.logout');
 
-    // Route::post('orders/place', [OrderController::class, 'place'])->name("api.orders.place");
-
+    // Route to get order history
     Route::get('orders/history', [OrderController::class, 'history'])->name("api.orders.history");
 });
 
-Route::middleware(['auth:sanctum', 'check.phone.verified'])->group(function() {
+// Password reset routes (not requiring blacklisted check)
+Route::post('password/reset/request', [OtpController::class, 'requestPasswordReset'])
+    ->name('api.password.reset.request');
+Route::post('password/reset/verify', [OtpController::class, 'verifyPasswordReset'])
+    ->name('api.password.reset.verify');
+
+// Registration route (not requiring blacklisted check)
+Route::post('register', [RegisterController::class, 'register'])->name('api.register');
+
+// Login route with blacklisted check
+Route::post('login', [LoginController::class, 'login'])->name('api.login')->middleware('check.blacklisted');
+
+// Group for routes requiring both authentication and phone verification
+Route::middleware(['auth:sanctum', 'check.blacklisted', 'check.phone.verified'])->group(function() {
     Route::post('orders/place', [OrderController::class, 'place'])->name("api.orders.place");
 });
 
