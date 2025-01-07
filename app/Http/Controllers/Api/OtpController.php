@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use \Log;
@@ -9,6 +8,63 @@ use Illuminate\Http\Request;
 
 class OtpController extends Controller
 {
+    public function requestPasswordReset(Request $request)
+    {
+        $request->validate(['phone' => 'required|string']);
+
+        // Find user by phone number
+        $user = User::where('phone', $request->phone)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        // Generate a random 6-digit OTP
+        $otp = rand(100000, 999999);
+
+        // Store OTP in the user's pin field
+        $user->pin = $otp;
+        $user->save();
+
+        $phone = $user->phone;
+        if (strpos($phone, '0') === 0) {
+            $phone = '84' . substr($phone, 1);
+        }
+
+        // Send OTP via SMS
+        $this->sendSms($phone, $otp);
+
+        return response()->json(['message' => 'OTP sent successfully.']);
+    }
+
+    public function verifyPasswordReset(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string',
+            'otp' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // Find the user based on the phone number sent in the request
+        $user = User::where('phone', $request->phone)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        if ($user->pin == $request->input('otp')) {
+            // Reset the password
+            $user->password = bcrypt($request->input('new_password'));
+            $user->pin = null;
+            $user->phone_verified_at = now(); // Mark phone as verified
+            $user->save();
+
+            return response()->json(['message' => 'Password reset successfully.']);
+        }
+
+        return response()->json(['message' => 'Invalid OTP.'], 400);
+    }
+
     public function sendOtp(Request $request)
     {
         // Get the authenticated user
@@ -94,3 +150,4 @@ class OtpController extends Controller
         }
     }
 }
+
