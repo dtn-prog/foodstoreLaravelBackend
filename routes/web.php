@@ -82,16 +82,20 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('register', [RegisterController::class, 'create'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 
-Route::get('/sms', function() {
+Route::get('/send-otp', function() {
+    $infobip_api_key = env('INFOBIP_API_KEY');
+    $infobip_base_url = env('INFOBIP_BASE_URL');
 
     $request = new HTTP_Request2();
-    $request->setUrl('https://e5xzq3.api.infobip.com/sms/2/text/advanced');
+    // $request->setUrl("https://${infobip_base_url}/sms/2/text/advanced");
+    $request->setUrl("https://" . $infobip_base_url . "/sms/2/text/advanced");
     $request->setMethod(HTTP_Request2::METHOD_POST);
     $request->setConfig(array(
         'follow_redirects' => TRUE
     ));
+
     $request->setHeader(array(
-        'Authorization' => 'App 07edae3507a29787c6307b76b2874c6f-d19665bb-7be9-4d54-babc-0dde6a641948',
+        'Authorization' => 'App ' . $infobip_api_key,
         'Content-Type' => 'application/json',
         'Accept' => 'application/json'
     ));
