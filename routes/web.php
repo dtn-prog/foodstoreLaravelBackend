@@ -16,7 +16,6 @@ use Infobip\Model\SmsMessage;
 use Infobip\Model\SmsRequest;
 
 use Infobip\Model\SmsTextContent;
-use Request2;
 
 
 
