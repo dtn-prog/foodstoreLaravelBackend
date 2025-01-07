@@ -40,7 +40,7 @@ class RegisterController extends Controller
         ]);
 
         $fields['password'] = bcrypt($fields['password']);
-        $fields['role'] = 'customer';
+        $fields['blacklisted'] = false;
 
         $user = User::create($fields);
 
